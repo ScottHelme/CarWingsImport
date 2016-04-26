@@ -11,7 +11,7 @@ if(!in_array($_POST['year'], array("2015", "2014", "2013", "2012", "2011")) || !
 $mmmCookies = tempnam(sys_get_temp_dir(), 'carwings-csv-import');
 
 // Login to Nissan. UPDATE: URL updated to HTTPS as they finally fixed that.
-$response = goFetch("https://www.nissan.co.uk/GB/en/YouPlus.html/j_security_check", array(
+$response = goFetch("https://youplus.nissan.co.uk/GB/en/YouPlus.html/j_security_check", array(
 	"j_validate" => true,
 	"j_username" => $_POST['username'],
 	"j_password" => $_POST['password'],
@@ -19,9 +19,9 @@ $response = goFetch("https://www.nissan.co.uk/GB/en/YouPlus.html/j_security_chec
 	));
 
 // Grabbed from Fiddler. You have to call these or nothing works. UPDATE: Added second link which is new.
-$response = goFetch("https://www.nissan.co.uk/content/GB/en/YouPlus/private/home.processafterlogin.html");
-$response = goFetch("https://www.nissan.co.uk/GB/en/YouPlus/private/carwings/flashdata.testusersession.html");
-$response = goFetch("https://www.nissan.co.uk/GB/en/YouPlus/private/carwings/flashdata.routeplannerredirect.html?portalType=P0001");
+$response = goFetch("https://youplus.nissan.co.uk/content/GB/en/YouPlus/private/home.processafterlogin.html");
+$response = goFetch("https://youplus.nissan.co.uk/GB/en/YouPlus/private/carwings/flashdata.testusersession.html");
+$response = goFetch("https://youplus.nissan.co.uk/GB/en/YouPlus/private/carwings/flashdata.routeplannerredirect.html?portalType=P0001");
 
 // Fetch the actual CSV data. Needs the month and year in the format YYYYMM. 
 $response = goFetch("https://www.ev.nissanconnect.eu/EV/mycar/electric_usage_download", array("TargetMonth" => $_POST['year'] . $_POST['month']));
